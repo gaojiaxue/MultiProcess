@@ -39,7 +39,7 @@ def multithread():
     t2.join()
     res1=q.get()
     res2=q.get()
-    print('multicore:',res1+res2)
+    print('multithread:',res1+res2)
 
 if __name__=='__main__':
     st=time.time()
@@ -51,4 +51,4 @@ if __name__=='__main__':
     print('multithread time:',st2-st)
     multicore()
     st3=time.time()
-    print('multithread time:',st3-st)
+    print('multicore time:',st3-st)
