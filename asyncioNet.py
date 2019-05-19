@@ -1,5 +1,6 @@
 import asyncio
-
+#coroutine marks a generator to be coroutine type so that we can throw it in to event loop
+#to simplify the code we can change @asyncio.coroutine into keyword:async, change yield from into keyword:await
 @asyncio.coroutine
 def wget(host):
     print('wget %s...' %host)
@@ -10,8 +11,12 @@ def wget(host):
     yield from writer.drain()
     while True:
         line=yield from reader.readline()
-        if line=b'\r\n':
+        if line == b'\r\n':
             break
         print('%s header >%s'%(host,line.decode('utf-8').rstrip()))
         writer.close()
         
+loop=asyncio.get_event_loop()
+tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
